@@ -10,12 +10,13 @@
  
 ####Tools in PW/tools:
 
-* **dist.x**  reads input data for **PWscf**, calculates distances and angles between atoms in a cell, taking into account periodicity
-* **ev.x** fits energy-vs-volume data to an equation of state
 * **kpoints.x** produces lists of k-points
-* **pwi2xsf.sh, pwo2xsf.sh** process respectively input and output files for **pw.x** and produce and XSF-formatted file suitable for plotting with XCrySDen
 * **bs.awk, mv.awk** process the output of pw.x
+* **ev.x** fits energy-vs-volume data to an equation of state
 * **cif2qe.sh** converting from CIF to a format suitable for QUANTUM ESPRESSO
+* **dist.x**  reads input data for **PWscf**, calculates distances and angles between atoms in a cell periodically
+* **pwi2xsf.sh, pwo2xsf.sh** process respectively input and output files for **pw.x** and produce and XSF-formatted file suitable for plotting with XCrySDen
+
 
 ***
 
@@ -43,6 +44,6 @@
 * **celldm** ( *real, dimension 6* ) : crystallographic constants
 * **nat** ( *integer* ) : number of atoms in the unit cell
 * **ntyp** ( *integer* ) : number of types of atoms in the unit cell
-* **ecutwfc** ( *real* ) : kinetic energy cutoff (Ry) for wavefunctions.
+* **ecutwfc** ( *real* ) : kinetic energy cutoff (Ry) for wavefunctions.  
 
     Power by makedown
