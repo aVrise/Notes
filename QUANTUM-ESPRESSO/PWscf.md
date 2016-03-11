@@ -14,20 +14,11 @@
 
 #####NAMELISTS:
 
-* **&CONTROL** 
-general variables controlling the run
-
-* **&SYSTEM**
-structural  information on the system under investigation
-
-* **&ELECTRONS**
- electronic variables: self-consistency, smearing
-
-* **&IONS** ( *optional* )
- ionic variables: relaxation, dynamics
-
-* **&CELL** ( *optional* )
-variable-cell optimization or dynamics
+* **&CONTROL** general variables controlling the run
+* **&SYSTEM** structural  information on the system under investigation
+* **&ELECTRONS** electronic variables: self-consistency, smearing
+* **&IONS** ( *optional* ) ionic variables: relaxation, dynamics
+* **&CELL** ( *optional* ) variable-cell optimization or dynamics
 
 #####AND CARDS:
 
@@ -40,13 +31,12 @@ variable-cell optimization or dynamics
 ####All the variables have default values **EXCEPT**:
 
 * **ibrav** ( *integer* ) : Bravais_lattice index
-
 * **celldm** ( *real, dimension 6* ) : crystallographic constants
-
 * **nat** ( *integer* ) : number of atoms in the unit cell
-
 * **ntyp** ( *integer* ) : number of types of atoms in the unit cell
-
 * **ecutwfc** ( *real* ) : kinetic energy cutoff (Ry) for wavefunctions.
+
+
+
 
     Power by makedown
