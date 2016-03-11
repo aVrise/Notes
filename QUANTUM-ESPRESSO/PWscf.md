@@ -1,5 +1,5 @@
 #PWscf
-###It can do:
+####It can do:
 
 * ground-state energy and one-electron (Kohn-Sham) orbitals, atomic forces, stresses;
 * structural optimization, also with variable cell;
