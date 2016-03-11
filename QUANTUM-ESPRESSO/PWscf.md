@@ -7,6 +7,15 @@
 * macroscopic polarization and ﬁnite electric ﬁelds via the modern theory of polarization (Berry Phases);
 * modern theory of orbital magnetization;
 * free-energy  surface  calculation  at  ﬁxed cell  through  meta-dynamics,  if  patched  with PLUMED.
+ 
+####Tools in PW/tools:
+
+* **dist.x**  reads input data for **PWscf**, calculates distances and angles between atoms in a cell, taking into account periodicity
+* **ev.x** fits energy-vs-volume data to an equation of state
+* **kpoints.x** produces lists of k-points
+* **pwi2xsf.sh, pwo2xsf.sh** process respectively input and output files for **pw.x** and produce and XSF-formatted file suitable for plotting with XCrySDen
+* **bs.awk, mv.awk** process the output of pw.x
+* **cif2qe.sh** converting from CIF to a format suitable for QUANTUM ESPRESSO
 
 ***
 
