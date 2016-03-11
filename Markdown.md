@@ -114,5 +114,7 @@
 ```
 [这是](github.com)好东西
 [这也是][a]好东西
+[这还是][]好东西
 
-[a]: github.com “这是描述"
+[a]: github.com "这是描述"
+[这还是]: github.com "这是描述2"
