@@ -138,3 +138,7 @@ __这是强调4__
 ```
 这是`代码`
 这是``反引号(`)代码``
+```
+![这是图片](https://avatars0.githubusercontent.com/u/7546797?v=3&s=40 "这是描述")
+```
+![这是图片](https://avatars0.githubusercontent.com/u/7546797?v=3&s=40 "这是描述")
