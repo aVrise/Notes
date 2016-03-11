@@ -36,7 +36,4 @@
 * **ntyp** ( *integer* ) : number of types of atoms in the unit cell
 * **ecutwfc** ( *real* ) : kinetic energy cutoff (Ry) for wavefunctions.
 
-
-
-
     Power by makedown
