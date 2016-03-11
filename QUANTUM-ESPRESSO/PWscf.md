@@ -12,6 +12,8 @@
 
 ####Input data:
 
+#####NAMELISTS:
+
 * **&CONTROL** 
 general variables controlling the run
 
@@ -26,6 +28,14 @@ structural  information on the system under investigation
 
 * **&CELL** ( *optional* )
 variable-cell optimization or dynamics
+
+#####AND CARDS:
+
+* **ATOMIC_SPECIES**
+* **ATOMIC_POSITIONS**
+* **K_POINTS**
+* **CELL_PARAMETERS** ( *optional* )
+* **OCCUPATIONS** ( *optional* )
 
 ####All the variables have default values **EXCEPT**:
 
