@@ -4,4 +4,4 @@
 
 ![QELogo] (http://www.quantum-espresso.org/wp-content/uploads/2011/07/logo_header.jpg)
 
-[QUANTUM ESPREESO] (QUANTUM\ ESPRESSO/)
+[QUANTUM ESPREESO] (QUANTUM-ESPRESSO/)
