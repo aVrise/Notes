@@ -154,17 +154,17 @@
     For Berry phase calculation: number of k-points to be calculated along each symmetry-reduced string The same for calculation with finite electric fields (lelfield=.true.)  
     
 /
-####$SYSTEM
+####&SYSTEM
 
 *  **ibrav** = *INTEGER*
 
     Bravais-lattice index. If ibrav /= 0, specify EITHER   [ celldm(1)-celldm(6) ] OR [ A,B,C,cosAB,cosAC,cosBC ]  but NOT both. The lattice parameter "alat" is set to  alat = celldm(1) (in a.u.) or alat = A (in Angstrom); 
 
-    For ibrav=0 specify the lattice vectors in CELL_PARAMETER,  optionally the lattice parameter alat = celldm(1) (in a.u.)  or = A (in Angstrom), or else it is taken from CELL_PARAMETERS
+    For ibrav=0 specify the lattice vectors in CELL\_PARAMETER,  optionally the lattice parameter alat = celldm(1) (in a.u.)  or = A (in Angstrom), or else it is taken from CELL\_PARAMETERS
 
     |ibrav|structure|celldm(2)-celldm(6) or b, c, cosab, cosac, cosbc|
     |---:|:----:|:---|
-    |0|free|crystal axis provided input *see card CELL_PARAMETERS*|
+    |0|free|crystal axis provided input *see card CELL\_PARAMETERS*|
     |1|cubic P (sc)| |
     |2|cubic F (fcc)| |
     |3|cubic I (bcc)| |
@@ -185,11 +185,92 @@
 
     * **cellm(i), i=1,6** = *REAL*
        
-        Crystallographic constants - see the "ibrav" variable. Specify either these OR A,B,C,cosAB,cosBC,cosAC NOT both. Only needed values (depending on "ibrav") must be specified alat = celldm(1) is the lattice parameter "a" (in BOHR) If ibrav=0, only celldm(1) is used if present; cell vectors are read from card CELL_PARAMETERS
+        Crystallographic constants - see the "ibrav" variable. Specify either these OR A,B,C,cosAB,cosBC,cosAC NOT both. Only needed values (depending on "ibrav") must be specified alat = celldm(1) is the lattice parameter "a" (in BOHR) If ibrav=0, only celldm(1) is used if present; cell vectors are read from card CELL\_PARAMETERS
 
     * *or* **A, B, C, cosAB, cosAC, cosBC** = *REAL*
 
-        Traditional crystallographic constants: a,b,c in ANGSTROM: cosAB = cosine of the angle between axis a and b (gamma); cosAC = cosine of the angle between axis a and c (beta); cosBC = cosine of the angle between axis b and c (alpha). The axis are chosen according to the value of "ibrav". Specify either these OR "celldm" but NOT both. Only needed values (depending on "ibrav") must be specified. The lattice parameter alat = A (in ANGSTROM ). If ibrav = 0, only A is used if present; cell vectors are read from card CELL_PARAMETERS
+        Traditional crystallographic constants: a,b,c in ANGSTROM: cosAB = cosine of the angle between axis a and b (gamma); cosAC = cosine of the angle between axis a and c (beta); cosBC = cosine of the angle between axis b and c (alpha). The axis are chosen according to the value of "ibrav". Specify either these OR "celldm" but NOT both. Only needed values (depending on "ibrav") must be specified. The lattice parameter alat = A (in ANGSTROM ). If ibrav = 0, only A is used if present; cell vectors are read from card CELL\_PARAMETERS
+
+*  **nat** = *INTEGER*
+
+    number of atoms in the unit cell
+
+*  **ntyp** = *INTEGER*
+
+    number of types of atoms in the unit cell
+
+*  **nbnd** = **number of valence bands** *for an insulator*, **20% more** *for a metal*
+
+    number of electronic states (bands) to be calculated. Note that in spin-polarized calculations the number of k-point, not the number of bands per k-point, is doubled.
+
+*  **tot\_charge** = **0.0**
+
+    total charge of the system. tot\_charge=+1 means one electron missing from the system, tot\_charge=-1 means one additional electron, and so on.
+
+*  **tot_magnetization** =  **\[unspecified\]** *or* **-1** 
+
+    total majority spin charge - minority spin charge.
+
+*  **starting\_magnetization(i), i=1,ntyp** = **0**
+
+*  **ecutwfc** = *REAL*
+
+    kinetic energy cutoff (Ry) for wavefunctions
+
+*  **ecutrho** = **4\*\[ecutwfc\]**
+
+    kinetic energy cutoff (Ry) for charge density and potential
+
+*  **ecutfock** = **\[ecutrho\]**
+
+    kinetic energy cutoff (Ry) for the exact exchange operator in EXX type calculations
+
+*  **nr1, nr2, nr3** = *INTEGER*
+
+    three-dimensional FFT mesh (hard grid) for charge density (and scf potential). If not specified
+the grid is calculated based on the cutoff for charge density (see also "ecutrho") Note: you must specify all three dimensions for this setting to be used.
+
+*  **nr1s, nr2s, nr3s** = *INTEGER*
+
+    three-dimensional mesh for wavefunction FFT and for the smooth part of charge density ( smooth grid ). Note: you must specify all three dimensions for this setting to be used.
+
+*  **nosym** = **.FALSE.**
+
+    .TRUE. for not using symmetry.
+
+*  **nosym\_evc** = **.FALSE.**
+
+     .TRUE. for not using symmetry, but the k-points are forced to have the symmetry of the Bravais lattice.
+
+*  **noinv** = **.FALSE.**
+
+    .TRUE. disable the usage of k => -k symmetry (time reversal) in k-point generation
+
+*  **no\_t\_rev** = **.FALSE.**
+
+    .TRUE. disable the usage of magnetic symmetry operations that consist in a rotation + time reversal.
+
+*  **force\_symmorphic** = **.FALSE.**
+   
+    .TRUE. force the symmetry group to be symmorphic by disabling symmetry operations having an associated fractionary translation
+
+*  **use\_all\_frac** = **.FALSE.**
+
+    .TRUE. do not discard symmetry operations with an associated fractionary translation that does not send the real-space FFT grid into itself.
+
+*  **occupations** = 'smearing', 'tetrahedra', 'fixed', 'from\_input'
+
+    'smearing':     gaussian smearing for metals
+              
+    'tetrahedra' :  especially suited for calculation of DOS
+
+    'fixed' :       for insulators with a gap
+
+    'from_input' :  The occupation are read from input file, card OCCUPATIONS. Option valid only for a single k-point, requires "nbnd" to be set in input. Occupations should be consistent                with the value of "tot\_charge".
+
+*  **one\_atom\_occupations** = **.FALSE.**
+
+    This flag is used for isolated atoms (nat=1) together with occupations='from\_input'. 
 
 
         Power by makedown
