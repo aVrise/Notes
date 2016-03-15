@@ -273,4 +273,6 @@ the grid is calculated based on the cutoff for charge density (see also "ecutrho
     This flag is used for isolated atoms (nat=1) together with occupations='from\_input'. 
 
 
+$$x=a/b$$
+
         Power by makedown
