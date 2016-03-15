@@ -152,5 +152,44 @@
 *  **nppstr** = *INTEGER*
 
     For Berry phase calculation: number of k-points to be calculated along each symmetry-reduced string The same for calculation with finite electric fields (lelfield=.true.)  
+    
+/
+####$SYSTEM
+
+*  **ibrav** = *INTEGER*
+
+    Bravais-lattice index. If ibrav /= 0, specify EITHER   [ celldm(1)-celldm(6) ] OR [ A,B,C,cosAB,cosAC,cosBC ]  but NOT both. The lattice parameter "alat" is set to  alat = celldm(1) (in a.u.) or alat = A (in Angstrom); 
+
+    For ibrav=0 specify the lattice vectors in CELL_PARAMETER,  optionally the lattice parameter alat = celldm(1) (in a.u.)  or = A (in Angstrom), or else it is taken from CELL_PARAMETERS
+
+    |ibrav|structure|celldm(2)-celldm(6) or b, c, cosab, cosac, cosbc|
+    |---:|:----:|:---|
+    |0|free|crystal axis provided input *see card CELL_PARAMETERS*|
+    |1|cubic P (sc)| |
+    |2|cubic F (fcc)| |
+    |3|cubic I (bcc)| |
+    |4|Hexagonal and Trigonal P|celldm(3)=c/a|
+    |5|Trigonal R, 3fold axis c|celldm(4)=cos(alpha)|
+    |-5|Trigonal R, 3fold axis <111>|celldm(4)=cos(alpha)|
+    |6|Tetragonal P (st)|celldm(3)=c/a|
+    |7|Tetragonal I (bct)|celldm(3)=c/a|
+    |8|Orthorhombic P|celldm(2)=b/a, celldm(3)=c/a|
+    |9|Orthorhombic base-centered(bco)|celldm(2)=b/a, celldm(3)=c/a|
+    |-9|*as 9, alternate description*| |
+    |10|Orthorhombic face-centered|celldm(2)=b/a, celldm(3)=c/a|
+    |11|Orthorhombic body-centered|celldm(2)=b/a, celldm(3)=c/a|
+    |12|Monoclinic P, unique axis c|celldm(2)=b/a, celldm(3)=c/a, celldm(4)=cos(ab)|
+    |-12|Monoclinic P, unique axis b|celldm(2)=b/a, celldm(3)=c/a, celldm(5)=cos(ac)|
+    |13|Monoclinic base-centered|celldm(2)=b/a, celldm(3)=c/a, celldm(4)=cos(ab)|
+    |14|Triclinic|celldm(2)= b/a, celldm(3)= c/a, celldm(4)= cos(bc), celldm(5)= cos(ac), celldm(6)= cos(ab)|
+
+    * **cellm(i), i=1,6** = *REAL*
+       
+        Crystallographic constants - see the "ibrav" variable. Specify either these OR A,B,C,cosAB,cosBC,cosAC NOT both. Only needed values (depending on "ibrav") must be specified alat = celldm(1) is the lattice parameter "a" (in BOHR) If ibrav=0, only celldm(1) is used if present; cell vectors are read from card CELL_PARAMETERS
+
+    * *or* **A, B, C, cosAB, cosAC, cosBC** = *REAL*
+
+        Traditional crystallographic constants: a,b,c in ANGSTROM: cosAB = cosine of the angle between axis a and b (gamma); cosAC = cosine of the angle between axis a and c (beta); cosBC = cosine of the angle between axis b and c (alpha). The axis are chosen according to the value of "ibrav". Specify either these OR "celldm" but NOT both. Only needed values (depending on "ibrav") must be specified. The lattice parameter alat = A (in ANGSTROM ). If ibrav = 0, only A is used if present; cell vectors are read from card CELL_PARAMETERS
+
 
         Power by makedown
