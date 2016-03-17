@@ -234,27 +234,27 @@ the grid is calculated based on the cutoff for charge density (see also "ecutrho
 
     three-dimensional mesh for wavefunction FFT and for the smooth part of charge density ( smooth grid ). Note: you must specify all three dimensions for this setting to be used.
 
-*  **nosym** = **.FALSE.**
+*  **nosym** = **.FALSE.**, .TRUE.
 
     .TRUE. for not using symmetry.
 
-*  **nosym\_evc** = **.FALSE.**
+*  **nosym\_evc** = **.FALSE.**, .TRUE.
 
      .TRUE. for not using symmetry, but the k-points are forced to have the symmetry of the Bravais lattice.
 
-*  **noinv** = **.FALSE.**
+*  **noinv** = **.FALSE.**, .TRUE.
 
     .TRUE. disable the usage of k => -k symmetry (time reversal) in k-point generation
 
-*  **no\_t\_rev** = **.FALSE.**
+*  **no\_t\_rev** = **.FALSE.**, .TRUE.
 
     .TRUE. disable the usage of magnetic symmetry operations that consist in a rotation + time reversal.
 
-*  **force\_symmorphic** = **.FALSE.**
+*  **force\_symmorphic** = **.FALSE.**, .TRUE.
    
     .TRUE. force the symmetry group to be symmorphic by disabling symmetry operations having an associated fractionary translation
 
-*  **use\_all\_frac** = **.FALSE.**
+*  **use\_all\_frac** = **.FALSE.**, .TRUE.
 
     .TRUE. do not discard symmetry operations with an associated fractionary translation that does not send the real-space FFT grid into itself.
 
@@ -266,13 +266,280 @@ the grid is calculated based on the cutoff for charge density (see also "ecutrho
 
     'fixed' :       for insulators with a gap
 
-    'from_input' :  The occupation are read from input file, card OCCUPATIONS. Option valid only for a single k-point, requires "nbnd" to be set in input. Occupations should be consistent                with the value of "tot\_charge".
+    'from_input' :  The occupation are read from input file, card OCCUPATIONS. Option valid only for a single k-point, requires "nbnd" to be set in input. Occupations should be consistent                with the value of "tot\_charge"
 
-*  **one\_atom\_occupations** = **.FALSE.**
+*  **one\_atom\_occupations** = **.FALSE.**, .TRUE.
 
-    This flag is used for isolated atoms (nat=1) together with occupations='from\_input'. 
+    This flag is used for isolated atoms (nat=1) together with occupations='from\_input'
+
+*  **starting\_spin\_angle** = **.FALSE.**, .TRUE.
+ 
+    ???
+
+*  **degauss** = **0.D0**
+
+    value of the gaussian spreading (Ry) for brillouin-zone integration in metals
+
+*  **smearing** = **'gaussian'**(gauss), 'methfessel-paxton'(m-p, mp), 'marzari-vanderbilt'(cold, m-v, mv), 'fermi-dirac'(f-d,fd)
+
+    'gaussian': ordinary Gaussian spreading (Default)
+
+    'methfessel-paxton': Methfessel-Paxton first-order spreading
+
+    'marzari-vanderbilt':  Marzari-Vanderbilt cold smearing
+
+    'fermi-dirac': smearing with Fermi-Dirac function
+
+*  **nspin** = **1**, 2, 4
+ 
+    1 :  non-polarized calculation (default)
+
+    2 :  spin-polarized calculation, LSDA (magnetization along z axis)
+
+    4 :  spin-polarized calculation, noncollinear (magnetization in generic direction). DO NOT specify nspin in this case; specify "noncolin=.TRUE." instead
+
+*  **noncolin** = **.FALSE.**, .TRUE.
+
+    .TRUE. for a noncollinear calculation.
+
+*  **ecfixed** = **0.0**
+
+    ecfixed, qcutz, q2sigma:  parameters for modified functional to be used in variable-cell molecular dynamics (or in stress calculation). "ecfixed" is the value (in Rydberg) of the constant-cutoff; "qcutz" and "q2sigma" are the height and the width (in Rydberg) of the energy step for reciprocal vectors whose square modulus is greater than "ecfixed". In the kinetic energy, G^2 is
+replaced by G^2 + qcutz * (1 + erf ( (G^2 - ecfixed)/q2sigma) )
+
+*  **qcutz** = **0.0**
+
+*  **q2sigma** = **0.1**
+
+*  **input\_dft** = *read from pseudopotential files*
+
+    Exchange-correlation functional
+
+*  **exx\_fraction** = *depend on the specified functional*
+
+    Fraction of EXX for hybrid functional calculations
+
+*  **screening\_parameter** = **0.106**
+
+    screening\_parameter for HSE like hybrid functionals
+
+*  **exxdiv\_treatment** = **gygi-baldereschi**, vcut\_spherical, vcut\_ws, none
+
+    Specific for EXX. It selects the kind of approach to be used for treating the Coulomb potential divergencies at small q vectors.
+
+    gygi-baldereschi : appropriate for cubic and quasi-cubic supercells
+
+    vcut\_spherical : appropriate for cubic and quasi-cubic supercells
+
+    vcut\_ws : appropriate for strongly anisotropic supercells, see also ecutvcut.
+
+    none : sets Coulomb potential at G, q=0 to 0.0 (required for GAU-PBE)
+
+*  **x\_gamma\_extrapolation** = **.TRUE.**, .FALSE.
+
+    Specific for EXX. If true, extrapolate the G=0 term of the potential. .FALSE. for GAU-PBE.
+
+*  **ecutvcut** = **0.0**
+
+    Reciprocal space cutoff for correcting Coulomb potential divergencies at small q vectors.
+
+*  **nqx1, nqx2, nqx3** = *	INTEGER*
+
+    three-dimensional mesh for q (k1-k2) sampling of the Fock operator (EXX). Can be smaller than
+the number of k-points.
+
+*  **lda\_plus\_u** = **.FALSE.**, .TRUE.
+
+*  **lda\_plus\_u\_kind** = **0**, 1
+
+    Specifies the type of DFT+U calculation: 0 for simplified version of Cococcioni and de Gironcoli, using Hubbard\_U; 1 for rotationally invariant scheme of Liechtenstein et al., using Hubbard\_U and Hubbard_J
+
+*  **Hubbard\_U(i), i=1,ntyp** = **0.D0 for all species**
+
+*  **Hubbard\_J0(i), i=1,ntype** = **0.D0 for all species**
+
+*  **Hubbard\_alpha(i), i=1,ntyp** = **0.D0 for all species**
+
+*  **Hubbard\_beta(i), i=1,ntyp** = **0.D0 for all species**
+
+*  **Hubbard\_J(i,ityp)** = **0.D0 for all species**
+
+    Hubbard\_J(i,ityp): J parameters (eV) for species ityp, used in DFT+U calculations (only for lda\_plus\_u\_kind=1)
+
+    For p orbitals:  J = Hubbard\_J(1,ityp);
+
+    For d orbitals:  J = Hubbard\_J(1,ityp), B = Hubbard\_J(2,ityp);
+    
+    For f orbitals:  J = Hubbard\_J(1,ityp), E2 = Hubbard\_J(2,ityp), E3= Hubbard\_J(3,ityp).
+
+    If B or E2 or E3 are not specified or set to 0 they will be calculated from J using atomic ratios.
+
+*  **starting\_ns\_eigenvalue(m,ispin,I)** = **-1.d0** *that means NOT SET*
+
+*  **U\_projection\_type** = **'atomic'**, 'ortho-atomic', 'norm-atomic', 'file', 'pseudo'
+
+    Only active when lda\_plus\_U is .TRUE., specifies the type of projector on localized orbital to be used in the DFT+U scheme.
+
+    'atomic': use atomic wfc's (as they are) to build the projector
+
+    'ortho-atomic': use Lowdin orthogonalized atomic wfc's
+
+    'norm-atomic':  Lowdin normalization of atomic wfc. 
+
+    'file': use the information from file "prefix".at wfc that must have been generated previously, for instance by pmw.x
+
+    'pseudo': use the pseudopotential projectors. The charge density outside the atomic core radii is excluded.
+
+     N.B.: for atoms with +U, a pseudopotential with the all-electron atomic wavefunctions is required
+
+*  **edir** = 1, 2, 3
+
+    The direction of the electric field or dipole correction is parallel to the bg(:,edir) reciprocal lattice vector. Used only if tefield is .TRUE.
+
+*  **emaxpos** = **0.5D0**
+
+    Position of the maximum of the saw-like potential along crystal axis "edir", within the  unit cell, 0 < emaxpos < 1. Used only if tefield is .TRUE.
+
+*  **eopreg** = **0.1D0**
+
+    Zone in the unit cell where the saw-like potential decreases, 0 < eopreg < 1. Used only if tefield is .TRUE.
+
+*  **eamp** = **0.001**
+
+    Amplitude of the electric field, in ***Hartree*** a.u.; 1 a.u. = 51.4220632*10^10 V/m). Used only if tefield=.TRUE.The saw-like potential increases with slope "eamp" in the region from (emaxpos+eopreg-1) to (emaxpos), then decreases to 0 until (emaxpos+eopreg), in units of the crystal vector "edir". Important: the change of slope of this potential must be located in the empty region, or else unphysical forces will result.
+
+*  **angle1(i), i=1,ntyp** = *REAL*
+
+    The angle expressed in degrees between the initial magnetization and the z-axis. For noncollinear calculations only; index i runs over the atom types.
+
+*  **angle2(i), i=1,ntyp** = *REAL*
+
+    The angle expressed in degrees between the projection of the initial magnetization on x-y plane and the x-axis. For noncollinear calculations only.
+
+*  **constrained\_magnetization** = **'none'**, 'total', 'atomic', 'total direction', atomic direction', 
+
+    Used to perform constrained calculations in magnetic systems.
+
+    'none': no constraint
+
+    'total': total magnetization is constrained by adding a penalty functional to the total energy:
+
+        LAMBDA * SUM_{i} ( magnetization(i) - fixed_magnetization(i) )**2
+
+     > where the sum over i runs over the three components of the magnetization. Lambda is a real number (see below). Noncolinear case only. Use "tot\_magnetization" for LSDA
+
+    'atomic': atomic magnetization are constrained to the defined starting magnetization adding a penalty:
+
+        LAMBDA * SUM_{i,itype} ( magnetic_moment(i,itype) - mcons(i,itype) )**2
+
+     > where i runs over the cartesian components (or just z in the collinear case) and itype over the types (1-ntype).  mcons(:,:) array is defined from starting_magnetization, (and angle1, angle2 in the non-collinear case). lambda is a real number
+
+    'total direction':  the angle theta of the total magnetization with the z axis (theta = fixed\_magnetization(3)) is constrained:
+
+          LAMBDA * ( arccos(magnetization(3)/mag_tot) - theta )**2
+
+     > where mag\_tot is the modulus of the total magnetization.
+
+    'atomic direction':
+          not all the components of the atomic magnetic moment are constrained but only the cosine of angle1, and the penalty functional is:
+
+          LAMBDA * SUM_{itype} ( mag_mom(3,itype)/mag_mom_tot - cos(angle1(ityp)) )**2
+
+    N.B.: symmetrization may prevent to reach the desired orientation of the magnetization. Try not to start with very highly symmetric configurations or use the nosym flag (only as a last remedy)
+
+*  **fixed\_magnetization(i), i=1,3** = **0.d0**
+
+    total magnetization vector (x,y,z components) to be kept fixed when constrained\_magnetization='total'
+
+*  **lambda** = **1.d0**
+
+    parameter used for constrained_magnetization calculations. N.B.: if the scf calculation does not converge, try to reduce lambda to obtain convergence, then restart the run with a larger lambda
+
+*  **report** = **1**
+
+    It is the number of iterations after which the program write all the atomic magnetic moments.
+
+*  **lspinorb** = .TRUE., .FALSE.
+
+    if .TRUE. the noncollinear code can use a pseudopotential with spin-orbit.
+
+*  **assume\_isolated** = **'none'**, 'makov-payne'(m-p, mp), 'martyna-tuckerman'(m-t, mt), 'esm'
+
+    Used to perform calculation assuming the system to be isolated (a molecule or a cluster in a 3D supercell).
+
+    
+    'none': regular periodic calculation w/o any correction.
+
+    'makov-payne', 'm-p', 'mp' : the Makov-Payne correction to the total energy is computed.
+
+    'martyna-tuckerman', 'm-t', 'mt' : Martyna-Tuckerman correction to both total energy and scf potential.
+
+    'esm' :  Effective Screening Medium Method.
+
+*  **esm\_bc** = **'pbc'**, 'bc1', 'bc2', 'bc3'
+
+    If assume\_isolated = 'esm', determines the boundary conditions used for either side of the slab.
+
+    'pbc' (default): regular periodic calculation (no ESM).
+
+    'bc1' : Vacuum-slab-vacuum (open boundary conditions)
+
+    'bc2' : Metal-slab-metal (dual electrode configuration). See also 'esm\_efield'.
+
+    'bc3' : Vacuum-slab-metal
+
+*  **esm\_w** = **0.d0**
+
+    If assume\_isolated = 'esm', determines the position offset [in a.u.] of the start of the effective screening region, measured relative to the cell edge. (ESM region begins at
+z = +/- [L\_z/2 + esm\_w] ).
+
+*  **esm\_efield** = **0.d0**
+
+    If assume\_isolated = 'esm' and esm\_bc = 'bc2', gives the magnitude of the electric field [Ry/a.u.] to be applied between semi-infinite ESM electrodes.
+
+*  **esm_nfit** = **4**
+
+    If assume\_isolated = 'esm', gives the number of z-grid points for the polynomial fit along the cell edge.
+
+*  **vdw\_corr** = **'none'**,  'grimme-d2'(Grimme-D2, DFT-D, dft-d), 'TS'(ts, ts-vdw, ts-vdW, tkatchenko-scheffler), 'XDM'(xdm)
+
+     'grimme-d2', 'Grimme-D2', 'DFT-D', 'dft-d': semiempirical Grimme's DFT-D2.
+
+    'TS', 'ts', 'ts-vdw', 'ts-vdW', 'tkatchenko-scheffler': Tkatchenko-Scheffler dispersion corrections with first-principle derived C6 coefficients (implemented in CP only).
+
+    'XDM', 'xdm': Exchange-hole dipole-moment model.
+
+*  **london\_s6** = **0.75**
+
+    global scaling parameter for DFT-D. Default is good for PBE.
+
+*  **london\_rcut** = **200**
+
+    cutoff radius (a.u.) for dispersion interactions
+
+*  **xdm\_a1** = **0.6836**
+
+    Damping function parameter a1 (adimensional). This value should change with the exchange-correlation functional. The default corresponds to PW86PBE.
+
+*  **xdm\_a2** = **1.5045**
+
+    Damping function parameter a2 (angstrom). This value should change with the exchange-correlation functional. The default corresponds to PW86PBE.
+
+*  **space\_group** = **0**
+
+    The number of the space group of the crystal, as given in the International Tables of Crystallography A (ITA). This allows to give in input only the inequivalent atomic positions. The positions of all the symmetry equivalent atoms are calculated by the code. Used only when the atomic positions are of type crystal\_sg.
+
+*  **uniqueb** = **.FALSE.**, .TRUE.
+
+    Used only for monoclinic lattices. If .TRUE. the b unique ibrav (-12 or -13) are used, and symmetry equivalent positions are chosen assuming that the two fold axis or the mirror normal is parallel to the b axis. If .FALSE. it is parallel to the c axis.
+
+*  **origin\_choice** = **1**
+
+     Used only for space groups that in the ITA allow the use of two different origins. origin\_choice=1, means the first origin, while origin\_choice=2 is the  second origin.
+
+*  **rhombohedral** = **.TRUE.**, .FALSE.
+
+   Used only for rhombohedral space groups. When .TRUE. the coordinates of the inequivalent atoms are given with respect to the rhombohedral axes, when .FALSE. the coordinates of the inequivalent atoms are given with respect to the hexagonal axes. They are converted internally to the rhombohedral axes and ibrav=5 is used in both cases.
 
 
-$$x=a/b$$
-
-        Power by makedown
+        Power by markdown
