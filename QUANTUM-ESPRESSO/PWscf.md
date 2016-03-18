@@ -7,7 +7,7 @@
 * macroscopic polarization and ﬁnite electric ﬁelds via the modern theory of polarization (Berry Phases);
 * modern theory of orbital magnetization;
 * free-energy  surface  calculation  at  ﬁxed cell  through  meta-dynamics,  if  patched  with PLUMED.
- 
+
 ####Tools in PW/tools:
 
 * **kpoints.x** produces lists of k-points
@@ -45,13 +45,13 @@
 * **nat** ( *integer* ) : number of atoms in the unit cell
 * **ntyp** ( *integer* ) : number of types of atoms in the unit cell
 * **ecutwfc** ( *real* ) : kinetic energy cutoff (Ry) for wavefunctions.    
- 
+
 
 ***
 ###Input files instruction
 ####&CONTROL
 
-*    **calculation** = **'scf'**, 'nscf', bands', 'relax', 'md', 'vc-relax', 'vc-md' 
+*    **calculation** = **'scf'**, 'nscf', bands', 'relax', 'md', 'vc-relax', 'vc-md'
 
       *vc: variable-cell*
 *  **title** = **'_CHARACTER_ '**
@@ -137,7 +137,7 @@
 
 *  **lorbm** = **.FALSE.**, .TRUE.
 
-    .TRUE. perform orbital magnetization calculation. If finite electric field is applied (lelfield=.true.) only Kubo terms are computed 
+    .TRUE. perform orbital magnetization calculation. If finite electric field is applied (lelfield=.true.) only Kubo terms are computed
 
 *  **lberry** = **.FALSE.**
 
@@ -152,13 +152,13 @@
 *  **nppstr** = *INTEGER*
 
     For Berry phase calculation: number of k-points to be calculated along each symmetry-reduced string The same for calculation with finite electric fields (lelfield=.true.)  
-    
+
 /
 ####&SYSTEM
 
 *  **ibrav** = *INTEGER*
 
-    Bravais-lattice index. If ibrav /= 0, specify EITHER   [ celldm(1)-celldm(6) ] OR [ A,B,C,cosAB,cosAC,cosBC ]  but NOT both. The lattice parameter "alat" is set to  alat = celldm(1) (in a.u.) or alat = A (in Angstrom); 
+    Bravais-lattice index. If ibrav /= 0, specify EITHER   [ celldm(1)-celldm(6) ] OR [ A,B,C,cosAB,cosAC,cosBC ]  but NOT both. The lattice parameter "alat" is set to  alat = celldm(1) (in a.u.) or alat = A (in Angstrom);
 
     For ibrav=0 specify the lattice vectors in CELL\_PARAMETER,  optionally the lattice parameter alat = celldm(1) (in a.u.)  or = A (in Angstrom), or else it is taken from CELL\_PARAMETERS
 
@@ -184,7 +184,7 @@
     |14|Triclinic|celldm(2)= b/a, celldm(3)= c/a, celldm(4)= cos(bc), celldm(5)= cos(ac), celldm(6)= cos(ab)|
 
     * **cellm(i), i=1,6** = *REAL*
-       
+
         Crystallographic constants - see the "ibrav" variable. Specify either these OR A,B,C,cosAB,cosBC,cosAC NOT both. Only needed values (depending on "ibrav") must be specified alat = celldm(1) is the lattice parameter "a" (in BOHR) If ibrav=0, only celldm(1) is used if present; cell vectors are read from card CELL\_PARAMETERS
 
     * *or* **A, B, C, cosAB, cosAC, cosBC** = *REAL*
@@ -207,7 +207,7 @@
 
     total charge of the system. tot\_charge=+1 means one electron missing from the system, tot\_charge=-1 means one additional electron, and so on.
 
-*  **tot_magnetization** =  **\[unspecified\]** *or* **-1** 
+*  **tot_magnetization** =  **\[unspecified\]** *or* **-1**
 
     total majority spin charge - minority spin charge.
 
@@ -251,7 +251,7 @@ the grid is calculated based on the cutoff for charge density (see also "ecutrho
     .TRUE. disable the usage of magnetic symmetry operations that consist in a rotation + time reversal.
 
 *  **force\_symmorphic** = **.FALSE.**, .TRUE.
-   
+
     .TRUE. force the symmetry group to be symmorphic by disabling symmetry operations having an associated fractionary translation
 
 *  **use\_all\_frac** = **.FALSE.**, .TRUE.
@@ -261,7 +261,7 @@ the grid is calculated based on the cutoff for charge density (see also "ecutrho
 *  **occupations** = 'smearing', 'tetrahedra', 'fixed', 'from\_input'
 
     'smearing':     gaussian smearing for metals
-              
+
     'tetrahedra' :  especially suited for calculation of DOS
 
     'fixed' :       for insulators with a gap
@@ -273,7 +273,7 @@ the grid is calculated based on the cutoff for charge density (see also "ecutrho
     This flag is used for isolated atoms (nat=1) together with occupations='from\_input'
 
 *  **starting\_spin\_angle** = **.FALSE.**, .TRUE.
- 
+
     ???
 
 *  **degauss** = **0.D0**
@@ -291,7 +291,7 @@ the grid is calculated based on the cutoff for charge density (see also "ecutrho
     'fermi-dirac': smearing with Fermi-Dirac function
 
 *  **nspin** = **1**, 2, 4
- 
+
     1 :  non-polarized calculation (default)
 
     2 :  spin-polarized calculation, LSDA (magnetization along z axis)
@@ -369,7 +369,7 @@ the number of k-points.
     For p orbitals:  J = Hubbard\_J(1,ityp);
 
     For d orbitals:  J = Hubbard\_J(1,ityp), B = Hubbard\_J(2,ityp);
-    
+
     For f orbitals:  J = Hubbard\_J(1,ityp), E2 = Hubbard\_J(2,ityp), E3= Hubbard\_J(3,ityp).
 
     If B or E2 or E3 are not specified or set to 0 they will be calculated from J using atomic ratios.
@@ -384,7 +384,7 @@ the number of k-points.
 
     'ortho-atomic': use Lowdin orthogonalized atomic wfc's
 
-    'norm-atomic':  Lowdin normalization of atomic wfc. 
+    'norm-atomic':  Lowdin normalization of atomic wfc.
 
     'file': use the information from file "prefix".at wfc that must have been generated previously, for instance by pmw.x
 
@@ -416,7 +416,7 @@ the number of k-points.
 
     The angle expressed in degrees between the projection of the initial magnetization on x-y plane and the x-axis. For noncollinear calculations only.
 
-*  **constrained\_magnetization** = **'none'**, 'total', 'atomic', 'total direction', atomic direction', 
+*  **constrained\_magnetization** = **'none'**, 'total', 'atomic', 'total direction', atomic direction',
 
     Used to perform constrained calculations in magnetic systems.
 
@@ -467,7 +467,7 @@ the number of k-points.
 
     Used to perform calculation assuming the system to be isolated (a molecule or a cluster in a 3D supercell).
 
-    
+
     'none': regular periodic calculation w/o any correction.
 
     'makov-payne', 'm-p', 'mp' : the Makov-Payne correction to the total energy is computed.
@@ -511,35 +511,85 @@ z = +/- [L\_z/2 + esm\_w] ).
 
 *  **london\_s6** = **0.75**
 
-    global scaling parameter for DFT-D. Default is good for PBE.
+   global scaling parameter for DFT-D. Default is good for PBE.
 
 *  **london\_rcut** = **200**
 
-    cutoff radius (a.u.) for dispersion interactions
+   cutoff radius (a.u.) for dispersion interactions
 
 *  **xdm\_a1** = **0.6836**
 
-    Damping function parameter a1 (adimensional). This value should change with the exchange-correlation functional. The default corresponds to PW86PBE.
+   Damping function parameter a1 (adimensional). This value should change with the exchange-correlation functional. The default corresponds to PW86PBE.
 
 *  **xdm\_a2** = **1.5045**
 
-    Damping function parameter a2 (angstrom). This value should change with the exchange-correlation functional. The default corresponds to PW86PBE.
+   Damping function parameter a2 (angstrom). This value should change with the exchange-correlation functional. The default corresponds to PW86PBE.
 
 *  **space\_group** = **0**
 
-    The number of the space group of the crystal, as given in the International Tables of Crystallography A (ITA). This allows to give in input only the inequivalent atomic positions. The positions of all the symmetry equivalent atoms are calculated by the code. Used only when the atomic positions are of type crystal\_sg.
+   The number of the space group of the crystal, as given in the International Tables of Crystallography A (ITA). This allows to give in input only the inequivalent atomic positions. The positions of all the symmetry equivalent atoms are calculated by the code. Used only when the atomic positions are of type crystal\_sg.
 
 *  **uniqueb** = **.FALSE.**, .TRUE.
 
-    Used only for monoclinic lattices. If .TRUE. the b unique ibrav (-12 or -13) are used, and symmetry equivalent positions are chosen assuming that the two fold axis or the mirror normal is parallel to the b axis. If .FALSE. it is parallel to the c axis.
+   Used only for monoclinic lattices. If .TRUE. the b unique ibrav (-12 or -13) are used, and symmetry equivalent positions are chosen assuming that the two fold axis or the mirror normal is parallel to the b axis. If .FALSE. it is parallel to the c axis.
 
 *  **origin\_choice** = **1**
 
-     Used only for space groups that in the ITA allow the use of two different origins. origin\_choice=1, means the first origin, while origin\_choice=2 is the  second origin.
+   Used only for space groups that in the ITA allow the use of two different origins. origin\_choice=1, means the first origin, while origin\_choice=2 is the  second origin.
 
 *  **rhombohedral** = **.TRUE.**, .FALSE.
 
    Used only for rhombohedral space groups. When .TRUE. the coordinates of the inequivalent atoms are given with respect to the rhombohedral axes, when .FALSE. the coordinates of the inequivalent atoms are given with respect to the hexagonal axes. They are converted internally to the rhombohedral axes and ibrav=5 is used in both cases.
+
+/
+####&ELECTRONS
+
+*  **electron\_maxstep** = **100**
+
+   maximum number of iterations in a scf step
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
 
 
         Power by markdown
