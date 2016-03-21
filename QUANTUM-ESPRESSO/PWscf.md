@@ -32,15 +32,15 @@
 
 #####AND CARDS:
 
-* **ATOMIC_SPECIES**
-* **ATOMIC_POSITIONS**
-* **K_POINTS**
-* **CELL_PARAMETERS** ( *optional* )
+* **ATOMIC\_SPECIES**
+* **ATOMIC\_POSITIONS**
+* **K\_POINTS**
+* **CELL\_PARAMETERS** ( *optional* )
 * **OCCUPATIONS** ( *optional* )
 
 ####All the variables have default values **EXCEPT**:
 
-* **ibrav** ( *integer* ) : Bravais_lattice index
+* **ibrav** ( *integer* ) : Bravais\_lattice index
 * **celldm** ( *real, dimension 6* ) : crystallographic constants
 * **nat** ( *integer* ) : number of atoms in the unit cell
 * **ntyp** ( *integer* ) : number of types of atoms in the unit cell
@@ -54,7 +54,7 @@
 *    **calculation** = **'scf'**, 'nscf', bands', 'relax', 'md', 'vc-relax', 'vc-md'
 
       *vc: variable-cell*
-*  **title** = **'_CHARACTER_ '**
+*  **title** = **'_CHARACTER_'**
 
 *  **verbosity** = **'low'**, 'high'
 
@@ -90,23 +90,23 @@
 
     prepended to input/output filenames
 
-*  **lkpoint_dir** = **'.TRUE.'**, .FALSE.
+*  **lkpoint\_dir** = **'.TRUE.'**, .FALSE.
 
     false for a single file for all k-points
 
-*  **max_seconds** = **1.D+7** *or* **150 days**
+*  **max\_seconds** = **1.D+7** *or* **150 days**
 
-    jobs stops after "max_seconds" CPU time
+    jobs stops after "max\_seconds" CPU time
 
-*  **etot_conv_thr** = **1.0D-4**
+*  **etot\_conv\_thr** = **1.0D-4**
 
     convergence threshold on total energy (a.u) for ionic minimization
 
-*  **forc_conv_thr** = **1.0D-3**
+*  **forc\_conv\_thr** = **1.0D-3**
 
     convergence threshold on forces (a.u) for ionic minimization
 
-*  **disk_io** = **'low'** *for scf calculation*, **'medium'** *for others*, 'high', 'none'
+*  **disk\_io** = **'low'** *for scf calculation*, **'medium'** *for others*, 'high', 'none'
 
     'high':   save all data to disk at each SCF step;   
     'medium': save wavefunctions at each SCF step unless
@@ -115,7 +115,7 @@
      'low' :   store wfc in memory, save only at the end;  
      'none':   do not save anything, not even at the end.
 
-*  **pseudo_dir** = **$ESPRESSO_PSEUDO** *or* **$HOME/espresso/pseudo/**
+*  **pseudo\_dir** = **$ESPRESSO\_PSEUDO** *or* **$HOME/espresso/pseudo/**
 
     directory containing pseudopotential files
 
@@ -207,7 +207,7 @@
 
     total charge of the system. tot\_charge=+1 means one electron missing from the system, tot\_charge=-1 means one additional electron, and so on.
 
-*  **tot_magnetization** =  **\[unspecified\]** *or* **-1**
+*  **tot\_magnetization** =  **\[unspecified\]** *or* **-1**
 
     total majority spin charge - minority spin charge.
 
@@ -432,7 +432,7 @@ the number of k-points.
 
         LAMBDA * SUM_{i,itype} ( magnetic_moment(i,itype) - mcons(i,itype) )**2
 
-     > where i runs over the cartesian components (or just z in the collinear case) and itype over the types (1-ntype).  mcons(:,:) array is defined from starting_magnetization, (and angle1, angle2 in the non-collinear case). lambda is a real number
+     > where i runs over the cartesian components (or just z in the collinear case) and itype over the types (1-ntype).  mcons(:,:) array is defined from starting\_magnetization, (and angle1, angle2 in the non-collinear case). lambda is a real number
 
     'total direction':  the angle theta of the total magnetization with the z axis (theta = fixed\_magnetization(3)) is constrained:
 
@@ -453,7 +453,7 @@ the number of k-points.
 
 *  **lambda** = **1.d0**
 
-    parameter used for constrained_magnetization calculations. N.B.: if the scf calculation does not converge, try to reduce lambda to obtain convergence, then restart the run with a larger lambda
+    parameter used for constrained\_magnetization calculations. N.B.: if the scf calculation does not converge, try to reduce lambda to obtain convergence, then restart the run with a larger lambda
 
 *  **report** = **1**
 
@@ -548,6 +548,352 @@ z = +/- [L\_z/2 + esm\_w] ).
 
    maximum number of iterations in a scf step
 
+*  **scf\_must\_converge** = **.TRUE.**, .FALSE.
+
+   If .false. do not stop molecular dynamics or ionic relaxation when electron\_maxstep is reached. Use with care.
+
+*  **conv\_thr** = **1.D-6**
+
+   Convergence threshold for selfconsistency: estimated energy error < conv\_thr. For non-self-consistent calculations, conv\_thr is used to set the default value of the threshold (ethr) for iterative diagonalizazion(diago\_thr\_init).
+
+*  **adaptive\_thr** = **.FALSE.**, .TRUE.
+
+   If .TRUE. this turns on the use of an adaptive conv\_thr for the inner scf loops when using EXX.
+
+*  **conv\_thr\_init** = **1.D-3**
+
+   When adaptive\_thr = .TRUE. this is the convergence threshold used for the first scf cycle.
+
+*  **conv\_thr\_multi** = **1.D-1**
+
+   When adaptive\_thr = .TRUE. the convergence threshold for each scf cycle is given by:
+
+      max( conv_thr, conv_thr_multi * dexx )
+
+*  **mixing\_mode** = **'plain'**, 'TF'， 'local-TF'
+
+   'plain' : charge density Broyden mixing
+
+   'TF' : as above, with simple Thomas-Fermi screening (for highly homogeneous systems)
+
+   'local-TF':  as above, with local-density-dependent TF screening (for highly inhomogeneous systems)
+
+*  **mixing\_beta** = **0.7D0**
+
+   mixing factor for self-consistency
+
+*  **mixing\_ndim** = **8**
+
+   number of iterations used in mixing scheme. If you are tight with memory, you may reduce it to 4 or so.
+
+*  **mixing\_fixed\_ns** = **0**
+
+   For DFT+U : number of iterations with fixed ns ( ns is the atomic density appearing in the Hubbard term ).
+
+*  **diagonalization** = **'david'**, 'cg', 'cg-serial'
+
+   'david': Davidson iterative diagonalization with overlap matrix (default). Fast, may in some rare cases fail.
+
+   'cg' : conjugate-gradient-like band-by-band diagonalization. Typically slower than 'david' but it uses less memory and is more robust (it seldom fails)
+
+   'cg-serial', 'david-serial': obsolete, use "-ndiag 1 instead". The subspace diagonalization in Davidson is performed by a fully distributed-memory parallel algorithm on 4 or more processors, by default. The allocated memory scales down with the number of procs. Procs involved in diagonalization can be changed with command-line option "-ndiag N". On multicore CPUs it is often convenient to let just one core per CPU to work on linear algebra.
+
+*  **diago\_thr\_init** = **1.D-2** *for scf calculation starting from a superposition of atomic orbitals*, 1.D-5 *for scf calculation starting from a charge desity*, (conv_thr/N elec)/10 *for non-scf calculations*
+
+   Convergence threshold (ethr) for iterative diagonalization (the check is on eigenvalue convergence).
+
+*  **diago\_cg\_maxiter** = *INTEGER*
+
+   For conjugate gradient diagonalization: max number of iterations
+
+*  **diago\_david\_ndim** = **4**
+
+   For Davidson diagonalization: dimension of workspace(number of wavefunction packets, at least 2 needed).A larger value may yield a somewhat faster algorithm but uses more memory. The opposite holds for smaller values. Try 2 if you are tight on memory or if your job is large: the speed penalty is often negligible.
+
+*  **diago\_full\_acc** = **.FALSE.**, .TRUE.
+
+   If .TRUE. all the empty states are diagonalized at the same level of accuracy of the occupied ones. Otherwise the empty states are diagonalized using a larger threshold (this should not affect total energy, forces, and other ground-state properties).
+
+*  **efield** = **0.D0**
+
+   Amplitude of the finite electric field (in Ry a.u.; 1 a.u. = 36.3609*10^10 V/m). Used only if lelfield=.TRUE. and if k-points (K\_POINTS card) are not automatic.
+
+*  **efield\_cart(i), i=1,3** = **(0.D0, 0.D0, 0.D0)**
+
+   Finite electric field (in Ry a.u.=36.3609*10^10 V/m) in cartesian axis. Used only if lelfield=.TRUE. and if k-points (K\_POINTS card) are automatic.
+
+*  **startingpot** = 'atomic', 'file'
+
+   'atomic': starting potential from atomic charge superposition (default for scf, \*relax, \*md )
+
+   'file': start from existing "charge-density.xml" file in the directory specified by variables "prefix" and "outdir". For nscf and bands calculation this is the default and the only sensible possibility.
+
+*  **startingwfc** = **'atomic+random'**, 'atomic', 'random', 'file'
+
+   'atomic': start from superposition of atomic orbitals If not enough atomic orbitals are available, fill with random numbers the remaining wfcs The scf typically starts better with this option, but in some high-symmetry cases one can "loose" valence states, ending up in the wrong ground state.
+
+   'atomic+random': as above, plus a superimposed "randomization" of atomic orbitals. Prevents the "loss" of states mentioned above.
+
+   'random': start from random wfcs. Slower start of scf but safe. It may also reduce memory usage in conjunction with diagonalization='cg'
+
+   'file': start from an existing wavefunction file in the directory specified by variables "prefix" and "outdir"
+
+*  **tqr** = **.FALSE.**, .TRUE.
+
+   If .true., use the real-space algorithm for augmentation charges in ultrasoft pseudopotentials. Must faster execution of ultrasoft-related calculations, but numerically less accurate than the default algorithm. Use with care and after testing!
+
+\
+###IONS *(input this namelist only if calculation = 'relax', 'md', 'vc-relax', 'vc-md')*  
+
+*  **ion\_dynamics** = *CHARACTER*  
+
+   Specify the type of ionic dynamics.
+
+   * **CASE (calculation = 'relax')**
+
+      'bfgs': (default) use BFGS quasi-newton algorithm, based on the trust radius procedure, for structural relaxation.
+
+      'damp': use damped (quick-min Verlet) dynamics for structural relaxation. Can be used for constrained optimisation: see CONSTRAINTS card
+
+   * **CASE (calculation = 'md')**
+
+      'verlet': (default)use Verlet algorithm to integrate Newton's equation. For constrained dynamics, see CONSTRAINTS card
+
+      'langevin' ion dynamics is over-damped Langevin
+
+      'langevin-smc' over-damped Langevin with Smart Monte Carlo:
+
+   * **CASE (calculation = 'vc-relax')**
+
+      'bfgs': (default) use BFGS quasi-newton algorithm; cell\_dynamics must be 'bfgs' too
+
+      'damp': use damped (Beeman) dynamics for structural relaxation
+
+   * **CASE (calculation = 'vc-md')**
+
+    'beeman': (default) use Beeman algorithm to integrate Newton's equation
+
+*  **ion\_positions** = **'default'**, 'from\_input'
+
+   'default': if restarting, use atomic positions read from the restart file; in all other cases, use atomic positions from standard input.
+
+   'from\_input': restart the simulation with atomic positions read from standard input, even if restarting.
+
+*  **pot\_extrapolation** = **'atomic'**, 'none', 'first\_order', 'second\_order'
+
+   Used to extrapolate the potential from preceding ionic steps.
+
+   'none': no extrapolation
+
+   'atomic': extrapolate the potential as if it was a sum of atomic-like orbitals
+
+   'first\_order' : extrapolate the potential with first-order formula
+
+   'second\_order': as above, with second order formula
+
+   Note: 'first\_order' and 'second\_order' extrapolation make sense only for molecular dynamics calculations.
+
+*  **wfc\_extrapolation** = **'none'**, 'first\_order', 'second\_order'
+
+   Used to extrapolate the wavefunctions from preceding ionic steps.
+
+   'none': no extrapolation
+
+   'first\_order': extrapolate the wave-functions with first-order formula.
+
+   'second\_order': as above, with second order formula.
+
+   Note: 'first\_order' and 'second-order' extrapolation make sense only for molecular dynamics calculations.
+
+*  **remove\_rigid\_rot** = **.FALSE.**, .TRUE.
+
+   This keyword is useful when simulating the dynamics and/or the thermodynamics of an isolated system. If set to true the total torque of the internal forces is set to zero by adding new forces that compensate the spurious interaction with the periodic images. This allows for the use of smaller supercells.
+
+   *  **keywords used for molecular dynamics**
+
+      *  **ion\_temperature** = **'not\_controlled'**, 'rescaling', 'rescale-v', 'rescale-T', 'berendsen', 'andersen', 'initial'
+
+         'rescaling': control ionic temperature via velocity rescaling (first method) see parameters "tempw", "tolp", and "nraise" (for VC-MD only). This rescaling method is the only one currently implemented in VC-MD
+
+         'rescale-v': control ionic temperature via velocity rescaling (second method) see parameters "tempw" and "nraise"
+
+         'rescale-T': control ionic temperature via velocity rescaling (third method) see parameter "delta\_t"
+
+         'reduce-T': reduce ionic temperature every "nraise" steps by the (negative) value "delta\_t"
+
+         'berendsen': control ionic temperature using "soft" velocity rescaling - see parameters "tempw" and "nraise"
+
+         'andersen': control ionic temperature using Andersen thermostat see parameters "tempw" and "nraise"
+
+         'initial': initialize ion velocities to temperature "tempw" and leave uncontrolled further on
+
+         'not\_controlled': ionic temperature is not controlled
+
+      *  **tempw** = **300.D0**
+
+         Starting temperature (Kelvin) in MD runs target temperature for most thermostats.
+
+      *  **tolp** = **100.D0**
+
+         Tolerance for velocity rescaling. Velocities are rescaled if the run-averaged and target temperature differ more than tolp.
+
+      *  **delta\_t** = **1.D0**
+
+         if ion\_temperature='rescale-T': at each step the instantaneous temperature is multiplied by delta\_t; this is done rescaling all the velocities.
+
+         if ion\_temperature='reduce-T': every 'nraise' steps the instantaneous temperature is reduced by -delta\_T (i.e. delta\_t < 0 is added to T)
+
+         The instantaneous temperature is calculated at the end of every ionic move and BEFORE rescaling. This is the temperature reported in the main output.
+
+      *  **nraise** = **1**
+
+         if ion\_temperature='reduce-T': every 'nraise' steps the instantaneous temperature is reduced by -delta\_T (.e. delta\_t is added to the temperature)
+
+         if ion\_temperature='rescale-v': every 'nraise' steps the average temperature, computed from the last nraise steps, is rescaled to tempw
+
+         if ion\_temperature='rescaling' and calculation='vc-md': every 'nraise' steps the instantaneous temperature is rescaled to tempw
+
+         if ion\_temperature='berendsen': the "rise time" parameter is given in units of the time step: tau = nraise*dt, so dt/tau = 1/nraise
+
+         if ion\_temperature='andersen': the "collision frequency" parameter is given as nu=1/tau defined above, so nu*dt = 1/nraise
+
+      *  **refold\_pos** = **.FALSE.**, .TRUE.
+
+         This keyword applies only in the case of molecular dynamics or damped dynamics. If true the ions are refolded at each step into the supercell.
+
+   *  **keywords used only in BFGS calculations**
+
+      *  **upscale** = **100.D0**
+
+         Max reduction factor for conv\_thr during structural optimization conv\_thr is automatically reduced when the relaxation approaches convergence so that forces are still accurate, but conv\_thr will not be reduced to less that conv\_thr / upscale.
+
+      *  **bfgs\_ndim** = **1**
+
+         Number of old forces and displacements vectors used in the PULAY mixing of the residual vectors obtained on the basis of the inverse hessian matrix given by the BFGS algorithm. When bfgs\_ndim = 1, the standard quasi-Newton BFGS method is used. (bfgs only)
+
+      *  **trust\_radius\_max** = **0.8D0**
+
+         Maximum ionic displacement in the structural relaxation. (bfgs only)
+
+      *  **trust\_radius\_min** = **1.D-3**
+
+         Initial ionic displacement in the structural relaxation. (bfgs only)
+
+      *  **w\_1** = **0.01D0**
+
+      *  **w\_2** = **0.5D0**
+
+      Parameters used in line search based on the Wolfe conditions. (bfgs only)
+
+/
+####&CELL *(input this namelist only if calculation = 'vc-relax', 'vc-md')*
+
+*  **cell_dynamics** = *CHARACTER*
+
+   *  **CASE ( calculation = 'vc-relax' )**
+
+      'none': no dynamics
+
+      'sd': steepest descent ( not implemented )
+
+      'damp-pr': damped (Beeman) dynamics of the Parrinello-Rahman extended lagrangian
+
+      'damp-w': damped (Beeman) dynamics of the new Wentzcovitch extended lagrangian
+
+      'bfgs': BFGS quasi-newton algorithm (default). ion\_dynamics must be 'bfgs' too.
+
+   *  **CASE ( calculation = 'vc-md' )**
+
+      'none': no dynamics
+
+      'pr': (Beeman) molecular dynamics of the Parrinello-Rahman extended lagrangian
+
+      'w':  (Beeman) molecular dynamics of the new Wentzcovitch extended lagrangian
+
+*  **press** = **0.D0**
+
+      Target pressure [KBar] in a variable-cell md or relaxation run.
+
+*  **wmass** = **0.75\*Tot_Mass/pi\*\*2** *for Parrinello-Rahman MD*, **0.75\*Tot_Mass/pi\*\*2/Omega\*\*(2/3)** *for Wentzcovitch MD*
+
+   Fictitious cell mass [amu] for variable-cell simulations (both 'vc-md' and 'vc-relax')
+
+*  **cell\_factor** = **1.2D0**
+
+   Used in the construction of the pseudopotential tables. It should exceed the maximum linear contraction of the cell during a simulation.
+
+*  **press\_conv\_thr** = **0.5D0 Kbar**
+
+   Convergence threshold on the pressure for variable cell relaxation ('vc-relax' : note that the other convergence thresholds for ionic relaxation apply as well).
+
+*  **cell\_dofree** = **'all'**, 'x', 'y', 'z', 'xy', 'xz', 'yz', 'xyz', 'shape', 'volume', '2Dxy', '2Dshape'
+
+   Select which of the cell parameters should be moved:
+
+   all     = all axis and angles are moved
+
+   x       = only the x component of axis 1 (v1_x) is moved
+
+   y       = only the y component of axis 2 (v2_y) is moved
+
+   z       = only the z component of axis 3 (v3_z) is moved
+
+   xy      = only v1_x and v2_y are moved
+
+   xz      = only v1_x and v3_z are moved
+
+   yz      = only v2_y and v3_z are moved
+
+   xyz     = only v1_x, v2_y, v3_z are moved
+
+   shape   = all axis and angles, keeping the volume fixed
+
+   volume  = the volume changes, keeping all angles fixed (i.e. only celldm(1) changes)
+
+   2Dxy    = only x and y components are allowed to change
+
+   2Dshape = as above, keeping the area in xy plane fixed
+
+/
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
 *  **prefix** = **pwscf**
 
 *  **prefix** = **pwscf**
@@ -589,6 +935,20 @@ z = +/- [L\_z/2 + esm\_w] ).
 *  **prefix** = **pwscf**
 
 *  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+*  **prefix** = **pwscf**
+
+
 
 
 
